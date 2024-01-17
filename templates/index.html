@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chinese Word Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container mx-auto">
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Example of how to use</h3>
+                <p>Here is an example of how to use Bootstrap:</p>
+
+                <h3>Input user text</h3>
+                <textarea id="userInput" class="form-control" placeholder="Enter user text"></textarea>
+
+            </div>
+            <div class="col-md-6">
+                <h3>PDF</h3>
+                <iframe id="pdf-iframe" src="" width="100%" height="800px">
+                </iframe>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="">
+        <iframe src="{{ url_for('generate_pdf') }}" height="100%" width="100%"></iframe>
+    </div> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+
+        function loadPDF() {
+            var userInput = document.getElementById('userInput').value;
+
+            fetch('/generate_pdf', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'text=' + encodeURIComponent(userInput)
+            })
+            .then(function(response) {
+                return response.blob();
+            })
+            .then(function(pdfBlob) {
+                // Create a URL for the PDF blob
+                var pdfUrl = URL.createObjectURL(pdfBlob);
+
+                // Set the src attribute of the iframe to the PDF URL
+                var pdfIframe = document.getElementById('pdf-iframe');
+                pdfIframe.src = pdfUrl;
+            });
+        }
+        document.getElementById('userInput').addEventListener('input', loadPDF)
+        // Call the loadPDF function when the page finishes loading
+        window.onload = loadPDF;
+    </script>
+</body>
+
+</html>
