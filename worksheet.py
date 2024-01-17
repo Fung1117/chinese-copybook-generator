@@ -24,8 +24,8 @@ def add_vocabulary(c, vocabulary):
     translation = translate_word(vocabulary)
 
     for word in vocabulary:
-        
-        c.drawImage('asset/ricegrid.png', 50, h - 60 - 10, width=50, height=50)
+
+        c.drawImage('asset/image/ricegrid.png', 50, h - 60 - 10, width=50, height=50)
         c.setFillColorRGB(0.7845, 0.7845, 0.7845)
         c.setFont("baseFont", 50)
         c.drawString(50, h-60, word)
