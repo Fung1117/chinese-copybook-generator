@@ -51,11 +51,14 @@ def add_vocabulary(c, vocabulary, pdf_height):
         c.setFont("baseFont", 50)
         c.drawString(50 * index, h - pdf_height - 45, word)
 
-        # url, width, height = get_chinese_word_png(word)
-        # scaling_factor = min(max_dimension / width, max_dimension / height)
-        # c.drawImage(url, 50, h - pdf_height - 40 * index - 100, width=int(width * scaling_factor), height=int(height * scaling_factor))
+        url, width, height = get_chinese_word_png(word)
+        scaling_factor = min(max_dimension / width, max_dimension / height)
+        c.drawImage(url, 50, h - pdf_height - 40 * index - 100, width=int(width * scaling_factor), height=int(height * scaling_factor))
 
     return pdf_height
+
+def add_new_page():
+    pass
 
 def generate_worksheet_pdf():
     pdf_buffer = BytesIO()
@@ -64,10 +67,11 @@ def generate_worksheet_pdf():
     c = canvas.Canvas(pdf_buffer, pagesize=A4)
 
     pdf_height = 50 
-    vocabulary = ['明聰', '聰明', '做']
-    for word in vocabulary:
-        add_vocabulary(c, word, pdf_height)
-        pdf_height += 80 
+    vocabularies = ['你好']
+    # vocabularies = ['明聰', '聰明', '做']
+    for vocabulary in vocabularies:
+        add_vocabulary(c, vocabulary, pdf_height)
+        pdf_height += 400 
 
     c.save()
     pdf_data = pdf_buffer.getvalue()
