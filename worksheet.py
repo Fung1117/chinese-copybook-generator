@@ -14,7 +14,7 @@ def get_chinese_word_png(chinese_word):
     image_path = f"assets/strokes/sequence/{unicode_hex}.png"
 
     if os.path.exists(image_path):
-        image = Image.open(image_path)
+        image = Image.open(image_path).convert("L")
         width, height = image.size
         return image_path, width, height
 
@@ -25,14 +25,13 @@ def get_chinese_word_png(chinese_word):
         os.makedirs(os.path.dirname(image_path), exist_ok=True)
         with open(image_path, 'wb') as f:
             f.write(response.content)
-        image = Image.open(BytesIO(response.content))
+        image = Image.open(BytesIO(response.content)).convert("L")
         width, height = image.size
         return image_path, width, height
-    
+
 def add_rice_grid(c, height):
     for index in range(1, 10):
         c.drawImage('assets/image/ricegrid.png', 50 * index, height, width=50, height=50)
-    
 
 def add_vocabulary(c, vocabulary, pdf_height):
     w, h = A4
@@ -52,13 +51,12 @@ def add_vocabulary(c, vocabulary, pdf_height):
         c.setFont("baseFont", 50)
         c.drawString(50 * index, h - pdf_height - 45, word)
 
-        url, width, height = get_chinese_word_png(word)
-        scaling_factor = min(max_dimension / width, max_dimension / height)
-
-        c.drawImage(url, 50, h - pdf_height - 40 * index - 100, width=int(width * scaling_factor), height=int(height * scaling_factor))
+        # url, width, height = get_chinese_word_png(word)
+        # scaling_factor = min(max_dimension / width, max_dimension / height)
+        # c.drawImage(url, 50, h - pdf_height - 40 * index - 100, width=int(width * scaling_factor), height=int(height * scaling_factor))
 
     return pdf_height
-    
+
 def generate_worksheet_pdf():
     pdf_buffer = BytesIO()
     pdfmetrics.registerFont(TTFont('baseFont', 'assets/font/DFPKaiShuW3-B5.ttf'))
