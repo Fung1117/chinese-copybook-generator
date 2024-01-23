@@ -6,9 +6,9 @@ app = Flask(__name__)
 @app.route('/generate_pdf', methods=['POST'])
 def generate_pdf():
     if request.method == 'POST':
-        user_input = request.form['text']
+        user_input = request.json.get('text', [])
         if user_input:
-            pdf_content = generate_worksheet_pdf()
+            pdf_content = generate_worksheet_pdf(user_input)
         else:
             pdf_content = generate_worksheet_pdf()
         response = make_response(pdf_content)

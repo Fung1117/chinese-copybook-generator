@@ -40,13 +40,14 @@
 
         function loadPDF() {
             var userInput = document.getElementById('userInput').value;
+            var userInputs = userInput.split('\n');
 
             fetch('/generate_pdf', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type': 'application/json'
                 },
-                body: 'text=' + encodeURIComponent(userInput)
+                body: JSON.stringify({ 'text': userInputs })
             })
             .then(function(response) {
                 return response.blob();

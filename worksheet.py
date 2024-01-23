@@ -79,19 +79,16 @@ def add_vocabulary(c, vocabulary, pdf_height):
 def add_new_page():
     pass
 
-def generate_worksheet_pdf():
+def generate_worksheet_pdf(vocabularies=['你好']):
     pdf_buffer = BytesIO()
     pdfmetrics.registerFont(TTFont('baseFont', 'assets/font/DFPKaiShuW3-B5.ttf'))
     pdfmetrics.registerFont(TTFont('Cousine', 'assets/font/Cousine.ttf'))
     c = canvas.Canvas(pdf_buffer, pagesize=A4)
 
-    pdf_height = 50 
-    # vocabularies = ['你好']
-    vocabularies = ['明聰', '聰明', '做']
+    pdf_height = 50
     for vocabulary in vocabularies:
         add_vocabulary(c, vocabulary, pdf_height)
         break
-
     c.save()
     pdf_data = pdf_buffer.getvalue()
     pdf_buffer.close()
