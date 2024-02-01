@@ -15,10 +15,10 @@ def get_chinese_word_png(unicode_hex):
     # unicode_hex = chinese_word.encode('unicode-escape').decode()[2:]
     image_path = f"assets/strokes/sequence/{unicode_hex}.png"
 
-    # if os.path.exists(image_path):
-    #     image = Image.open(image_path)
-    #     width, height = image.size
-    #     return image_path, width, height
+    if os.path.exists(image_path):
+        image = Image.open(image_path)
+        width, height = image.size
+        return image_path, width, height
 
     url = f"https://ckc.eduhk.hk/apps/strokes/sequence/200/{unicode_hex}.png"
     response = requests.get(url)
@@ -44,10 +44,11 @@ def get_chinese_word_png(unicode_hex):
 def get_chinese_image(chinese_word):
     unicode_hex = chinese_word.encode('unicode-escape').decode()[2:]
     image_path = f"assets/strokes/sequence/{unicode_hex}.png"
-    if os.path.exists(image_path):
-        image = Image.open(image_path)
+    absolute_path = os.path.abspath(image_path)
+    if os.path.exists(absolute_path):
+        image = Image.open(absolute_path)
         width, height = image.size
-        return image_path, width, height
+        return absolute_path, width, height
 
 
 def page_one(c, vocabularies):
