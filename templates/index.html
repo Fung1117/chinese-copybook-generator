@@ -54,7 +54,8 @@
             var vocabulary = document.getElementById('vocabulary').value;
             var vocabularies = vocabulary.split('\n');
             var words = document.getElementById('word').value;
-
+            words = words.replace(/\s/g, '');
+            
             fetch('/generate_pdf', {
                 method: 'POST',
                 headers: {
