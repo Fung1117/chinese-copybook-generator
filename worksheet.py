@@ -11,14 +11,14 @@ from reportlab.pdfgen import canvas
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
-def get_chinese_word_png(chinese_word):
-    unicode_hex = chinese_word.encode('unicode-escape').decode()[2:]
+def get_chinese_word_png(unicode_hex):
+    # unicode_hex = chinese_word.encode('unicode-escape').decode()[2:]
     image_path = f"assets/strokes/sequence/{unicode_hex}.png"
 
-    if os.path.exists(image_path):
-        image = Image.open(image_path)
-        width, height = image.size
-        return image_path, width, height
+    # if os.path.exists(image_path):
+    #     image = Image.open(image_path)
+    #     width, height = image.size
+    #     return image_path, width, height
 
     url = f"https://ckc.eduhk.hk/apps/strokes/sequence/200/{unicode_hex}.png"
     response = requests.get(url)
@@ -95,3 +95,14 @@ def generate_worksheet_pdf(vocabularies, words):
     pdf_data = pdf_buffer.getvalue()
     pdf_buffer.close()
     return pdf_data
+
+def download_png():
+    start_range = 0x5787
+    end_range = 0x5E0A
+    # end_range = 0x9FFF
+
+    for code_point in range(start_range, end_range + 1):
+        unicode_hex = hex(code_point)[2:].lower().zfill(4)
+        get_chinese_word_png(unicode_hex)
+
+download_png()
