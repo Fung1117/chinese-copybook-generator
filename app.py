@@ -6,17 +6,15 @@ app = Flask(__name__)
 @app.route('/generate_pdf', methods=['POST'])
 def generate_pdf():
     if request.method == 'POST':
-        user_input = request.json.get('text', [])
-        if user_input:
-            pdf_content = generate_worksheet_pdf(user_input)
-        else:
-            pdf_content = generate_worksheet_pdf()
+        vocabularies = request.json.get('vocabularies', [])
+        words = request.json.get('words', '')
+        pdf_content = generate_worksheet_pdf(vocabularies, words)
         response = make_response(pdf_content)
         response.headers["Content-Type"] = "application/pdf"
         response.headers['Content-Disposition'] = 'inline; filename=output.pdf'
         return response
     else:
-        pdf_content = generate_worksheet_pdf()
+        pdf_content = generate_worksheet_pdf(['你好'], '你好')
         response = make_response(pdf_content)
         response.headers["Content-Type"] = "application/pdf"
         response.headers['Content-Disposition'] = 'inline; filename=output.pdf'
