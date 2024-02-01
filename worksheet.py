@@ -41,6 +41,15 @@ def get_chinese_word_png(unicode_hex):
 
         return image_path, width, height
 
+def get_chinese_image(chinese_word):
+    unicode_hex = chinese_word.encode('unicode-escape').decode()[2:]
+    image_path = f"assets/strokes/sequence/{unicode_hex}.png"
+    if os.path.exists(image_path):
+        image = Image.open(image_path)
+        width, height = image.size
+        return image_path, width, height
+
+
 def page_one(c, vocabularies):
     w, h = A4
     c.setFillColorRGB(0.7845, 0.7845, 0.7845)
@@ -70,7 +79,7 @@ def page_two(c, words):
     c.setFont("baseFont", 38)
     max_dimension = 460
     for index, word in enumerate(words):
-        image_path, width, height = get_chinese_word_png(word)
+        image_path, width, height = get_chinese_image(word)
         scaling_factor = max_dimension / width
         c.drawImage(image_path, 90, h - 50 - height * scaling_factor - 10 * index - p_heigth, width=width * scaling_factor, height=height * scaling_factor)
         
