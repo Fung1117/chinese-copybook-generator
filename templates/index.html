@@ -41,7 +41,7 @@
         function loadPDF() {
             var userInput = document.getElementById('userInput').value;
             var userInputs = userInput.split('\n');
-
+            
             fetch('/generate_pdf', {
                 method: 'POST',
                 headers: {
@@ -53,10 +53,7 @@
                 return response.blob();
             })
             .then(function(pdfBlob) {
-                // Create a URL for the PDF blob
                 var pdfUrl = URL.createObjectURL(pdfBlob);
-
-                // Set the src attribute of the iframe to the PDF URL
                 var pdfIframe = document.getElementById('pdf-iframe');
                 pdfIframe.src = pdfUrl;
             });
