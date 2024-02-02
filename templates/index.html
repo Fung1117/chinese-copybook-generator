@@ -13,9 +13,9 @@
             #pdf-container {
                 margin-top: 100px;
             } 
-            #pdf-iframe {
+            /* #pdf-iframe {
                 height: 500px;
-            }
+            } */
         }
     </style>
 </head>
@@ -37,8 +37,9 @@
             </div>
             <div class="col-md-6" id="pdf-container">
                 <h3>PDF</h3>
-                <iframe id="pdf-iframe" src="" width="100%" height="800px">
-                </iframe>
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe id="pdf-iframe" class="embed-responsive-item" src="" allowfullscreen style="height: 800px; width: 100%;"></iframe>
+                </div>
             </div>
 
         </div>
